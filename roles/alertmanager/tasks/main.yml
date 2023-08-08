@@ -1,0 +1,67 @@
+---
+
+- name: Create system group alertmanager
+  ansible.builtin.group:
+    name: alertmanager
+    system: true
+    state: present
+
+- name: Create system user
+  ansible.builtin.user:
+    name: alertmanager
+    system: true
+    shell: "/user/sbin/nologin"
+    group: alertmanager
+    createhome: false
+
+- name: Create alertmanager directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: alertmanager
+    group: alertmanager
+    mode: 0755
+  loop:
+    - "/etc/alertmanager"
+    - "/var/lib/prometheus/alertmanager"
+
+- name: Download alertmanager
+  ansible.builtin.get_url:
+    url: "https://github.com/prometheus/alertmanager/releases/download/v0.25.0/alertmanager-0.25.0.linux-amd64.tar.gz"
+    dest: "/tmp/alertmanager-0.25.0.linux-amd64.tar.gz"
+    mode: 0644
+
+- name: Extract alertmanager
+  ansible.builtin.unarchive:
+    src: "/tmp/alertmanager-0.25.0.linux-amd64.tar.gz"
+    dest: "/tmp"
+    creates: "/tmp/alertmanager-0.25.0.linux-amd64/alertmanager"  
+
+- name: Copy file alertmanager amtool
+  ansible.builtin.copy:
+    src: "/tmp/alertmanager-0.25.0.linux-amd64/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    owner: root
+    group: root
+    mode: 0755
+  loop:
+    - alertmanager
+    - amtool
+
+- name: Copy file alertmanager.yml
+  ansible.builtin.copy:
+    src: "/tmp/alertmanager-0.25.0.linux-amd64/alertmanager.yml"
+    dest: "/etc/alertmanager/alertmanager.yml"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Create systemd service unit
+  ansible.builtin.template:
+    src: alertmanager.service.j2
+    dest: /etc/systemd/system/alertmanager.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: 
+    - start alertmanager

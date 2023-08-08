@@ -1,0 +1,21 @@
+---
+
+- name: Install prometheus
+  hosts: prom
+  become: true
+  roles:
+    - role: roles/prometheus
+      tags: prometheus
+
+    - role: roles/alertmanager
+      tags: alertmanager
+
+    - role: roles/node_exporter
+      tags: node_exporter   
+
+# - name: Install node_exporter client
+#   hosts: client
+#   become: true
+#   roles:
+#     - role: roles/node_exporter
+#       tags: node_exporter
