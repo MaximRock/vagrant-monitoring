@@ -1,0 +1,32 @@
+---
+
+- name: Create systemd service unit
+  ansible.builtin.template:
+    src: prometheus.service.j2
+    dest: /etc/systemd/system/prometheus.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: 
+    - restart prometheus
+
+- name: Copy file alert.rules.yml
+  ansible.builtin.copy:
+    src: "./file/alert.rules.yml"
+    dest: "/etc/prometheus/alert.rules.yml"
+    owner: root
+    group: root
+    mode: 0644
+  notify: 
+    - restart prometheus    
+
+- name: Configure prometheus.yml add node_exporter
+  ansible.builtin.template:
+    src: prometheus.yml.j2
+    dest: "/etc/prometheus/prometheus.yml"
+    owner: root
+    group: root
+    mode: 0644
+  notify: 
+    - restart prometheus
+

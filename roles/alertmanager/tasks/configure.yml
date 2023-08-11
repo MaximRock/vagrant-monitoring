@@ -1,0 +1,22 @@
+---
+
+- name: Create systemd service unit
+  ansible.builtin.template:
+    src: alertmanager.service.j2
+    dest: /etc/systemd/system/alertmanager.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: 
+    - start alertmanager
+
+- name: Configure prometheus.yml add node_exporter
+  ansible.builtin.template:
+    src: alertmanager.yml.j2
+    dest: "/etc/alertmanager/alertmanager.yml"
+    owner: root
+    group: root
+    mode: 0644
+  notify: 
+    - start alertmanager
+    

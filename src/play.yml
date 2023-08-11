@@ -15,11 +15,4 @@
 
     - role: roles/grafana
       tags: grafana   
-
-# - name: Install node_exporter client
-#   hosts: client
-#   become: true
-#   roles:
-#     - role: roles/node_exporter
-#       tags: node_exporter
-      
+                            

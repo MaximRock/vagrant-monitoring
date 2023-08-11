@@ -45,12 +45,12 @@
   notify: 
     - restart node_exporter
 
-- name: Configure prometheus.yml add node_exporter
-  ansible.builtin.template:
-    src: prometheus.yml.j2
-    dest: /etc/prometheus/prometheus.yml
-    owner: root
-    group: root
-    mode: 0644
-  notify: 
-    - restart prometheus
+# - name: Configure prometheus.yml add node_exporter
+#   ansible.builtin.template:
+#     src: prometheus.yml.j2
+#     dest: /etc/prometheus/prometheus.yml
+#     owner: root
+#     group: root
+#     mode: 0644
+#   notify: 
+#     - restart prometheus

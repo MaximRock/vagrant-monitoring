@@ -12,8 +12,10 @@ Vagrant.configure("2") do |config|
         prom.vm.network "forwarded_port", guest: 9093, host: 9093,  auto_correct: true
         prom.vm.network "forwarded_port", guest: 9094, host: 9094,  auto_correct: true
         prom.vm.network "forwarded_port", guest: 9100, host: 9100,  auto_correct: true
+        prom.vm.network "forwarded_port", guest: 3000, host: 3000,  auto_correct: true
         prom.vm.network "public_network", ip: "192.168.1.100", bridge: "Realtek PCIe GbE Family Controller"
         prom.vm.hostname = "prom"
+        prom.vm.synced_folder "src/", "/home/vagrant/src/" 
         prom.vm.provider "virtualbox" do |vb|
             vb.gui = false
             vb.memory=1024
