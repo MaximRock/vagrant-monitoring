@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/src/":{"guestpath":"/home/vagrant/src","hostpath":"/home/maxim/github/vagrant-monitoring/src","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/home/maxim/github/vagrant-monitoring","disabled":false,"__vagrantfile":true}}}

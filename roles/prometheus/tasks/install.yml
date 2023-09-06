@@ -37,6 +37,7 @@
     src: "/tmp/prometheus-2.46.0.linux-amd64.tar.gz"
     dest: "/tmp"
     creates: "/tmp/prometheus-2.46.0.linux-amd64/prometheus"
+    remote_src: yes
 
 - name: Copy file prometheus promtool
   ansible.builtin.copy:
@@ -45,6 +46,7 @@
     owner: root
     group: root
     mode: 0755
+    remote_src: yes
   loop:
     - prometheus
     - promtool
@@ -56,6 +58,7 @@
     owner: root
     group: root
     mode: 0644
+    remote_src: yes
   loop:
     - console_libraries
     - consoles

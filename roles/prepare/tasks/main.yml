@@ -1,0 +1,30 @@
+---
+
+- name: Update apt packages
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Set timezone to Europe/Moscow
+  community.general.timezone:
+    name: Europe/Moscow
+
+- name: install Chrony
+  ansible.builtin.apt:
+    name: chrony 
+    state: latest
+    update_cache: true
+
+- name: Allow TCP ports
+  ansible.builtin.iptables:
+    chain: INPUT
+    rule_num: '1'
+    action: insert
+    protocol: TCP
+    jump: ACCEPT
+    destination_port: "{{ item }}"
+  loop: 
+    - '9090'
+    - '9093'
+    - '9094'    
+    - '9100'
+    - '3000'

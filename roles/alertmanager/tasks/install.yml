@@ -35,7 +35,8 @@
   ansible.builtin.unarchive:
     src: "/tmp/alertmanager-0.25.0.linux-amd64.tar.gz"
     dest: "/tmp"
-    creates: "/tmp/alertmanager-0.25.0.linux-amd64/alertmanager"  
+    creates: "/tmp/alertmanager-0.25.0.linux-amd64/alertmanager"
+    remote_src: yes
 
 - name: Copy file alertmanager amtool
   ansible.builtin.copy:
@@ -44,6 +45,7 @@
     owner: root
     group: root
     mode: 0755
+    remote_src: yes
   loop:
     - alertmanager
     - amtool
@@ -55,4 +57,5 @@
     owner: root
     group: root
     mode: 0644
+    remote_src: yes
 

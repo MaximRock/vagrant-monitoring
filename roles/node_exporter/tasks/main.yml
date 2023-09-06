@@ -25,7 +25,8 @@
   ansible.builtin.unarchive:
     src: "/tmp//node_exporter-1.6.1.linux-amd64.tar.gz"
     dest: "/tmp"
-    creates: "/tmp/node_exporter-1.6.1.linux-amd64/node_exporter"     
+    creates: "/tmp/node_exporter-1.6.1.linux-amd64/node_exporter"
+    remote_src: yes  
 
 - name: Copy file node-exporter
   ansible.builtin.copy:
@@ -34,6 +35,7 @@
     owner: root
     group: root
     mode: 0755
+    remote_src: yes
 
 - name: Create systemd service unit
   ansible.builtin.template:

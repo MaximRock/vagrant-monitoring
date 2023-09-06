@@ -8,11 +8,11 @@
       tags:
         - grafana_install
 
-# - name: Install
-#   ansible.builtin.include_tasks:
-#     file: configure.yml
-#     apply:
-#       become: true
-#       tags:
-#         - grafana_configure
+- name: Install
+  ansible.builtin.include_tasks:
+    file: configure.yml
+    apply:
+      become: true
+      tags:
+        - grafana_configure
 

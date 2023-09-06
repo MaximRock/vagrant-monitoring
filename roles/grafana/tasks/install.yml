@@ -6,7 +6,7 @@
     update_cache: yes
     cache_valid_time: 3600
 
-- name: add gpg hey
+- name: add gpg key
   apt_key:
     url: "https://packages.grafana.com/gpg.key"
     validate_certs: no
@@ -23,23 +23,3 @@
     state: latest
     update_cache: yes
     cache_valid_time: 3600
-
-- name: start service grafana-server
-  systemd:
-    name: grafana-server
-    state: started
-    enabled: yes
-
-- name: wait for service up
-  uri:
-    url: "http://127.0.0.1:3000"
-    status_code: 200
-  register: __result
-  until: __result.status == 200
-  retries: 120
-  delay: 1
-
-- name: change admin password for grafana gui
-  shell : "grafana-cli admin reset-admin-password {{ grafana_admin_password }}"
-  register: __command_admin
-  changed_when: __command_admin.rc !=0       

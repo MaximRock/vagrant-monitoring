@@ -4,6 +4,9 @@
   hosts: prom
   become: true
   roles:
+    - role: roles/prepare
+      tags: prepare
+
     - role: roles/prometheus
       tags: prometheus
 
@@ -16,10 +19,13 @@
     - role: roles/grafana
       tags: grafana   
 
-# - name: Install node_exporter client
-#   hosts: client
-#   become: true
-#   roles:
-#     - role: roles/node_exporter
-#       tags: node_exporter
+- name: Install node_exporter client
+  hosts: client
+  become: true
+  roles:
+    - role: roles/prepare-client
+      tags: prepare
+
+    - role: roles/node_exporter
+      tags: node_exporter
       
